@@ -3,11 +3,14 @@ package com.ticket.booking.event.controller;
 import com.ticket.booking.event.dto.BookingRequestDto;
 import com.ticket.booking.event.dto.BookingResponseDto;
 import com.ticket.booking.event.service.BookingService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Bookings", description = "Operations related to Bookings")
 @RestController
 @RequestMapping("/bookings")
 public class BookingController {
@@ -24,6 +27,7 @@ public class BookingController {
      * @param bookingRequestDto the booking request data transfer object containing booking details
      * @return a ResponseEntity containing the created booking response data transfer object
      */
+    @Operation(summary = "create booking events")
     @PostMapping
     public ResponseEntity<BookingResponseDto> createBooking(@RequestBody BookingRequestDto bookingRequestDto) {
         return ResponseEntity.ok(bookingService.createBooking(bookingRequestDto));
@@ -37,6 +41,7 @@ public class BookingController {
      * @param userId optional filter for user ID
      * @return a ResponseEntity containing a list of booking response data transfer objects
      */
+    @Operation(summary = "get all bookings with optional filter bookingId, eventId, userId")
     @GetMapping
     public ResponseEntity<List<BookingResponseDto>> getBookings(
             @RequestParam(required = false) Long bookingId,
@@ -52,6 +57,7 @@ public class BookingController {
      *
      * @param id the ID of the booking to cancel
      */
+    @Operation(summary = "soft delete booking based on bookingId")
     @DeleteMapping("/{id}")
     public void cancelBooking(@PathVariable Long id) {
         bookingService.cancelBooking(id);

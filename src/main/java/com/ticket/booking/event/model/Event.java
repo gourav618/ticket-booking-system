@@ -15,5 +15,5 @@ public class Event {
     private LocalDateTime date;
     private City location;
     private Integer totalSeats;
-    private Integer bookedSeats = 0;
+    private Integer bookedSeats;
 }

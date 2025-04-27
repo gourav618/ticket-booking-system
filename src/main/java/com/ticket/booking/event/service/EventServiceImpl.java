@@ -1,5 +1,6 @@
 package com.ticket.booking.event.service;
 
+import com.ticket.booking.event.dto.BookingResponseDto;
 import com.ticket.booking.event.dto.EventRequestDto;
 import com.ticket.booking.event.dto.EventResponseDto;
 import com.ticket.booking.event.exception.EventException;
@@ -18,10 +19,12 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final SortStrategyFactory sortStrategyFactory;
+    private final BookingService bookingService;
 
-    public EventServiceImpl(EventRepository eventRepository, SortStrategyFactory sortStrategyFactory) {
+    public EventServiceImpl(EventRepository eventRepository, SortStrategyFactory sortStrategyFactory, BookingService bookingService) {
         this.eventRepository = eventRepository;
         this.sortStrategyFactory = sortStrategyFactory;
+        this.bookingService = bookingService;
     }
 
     /**
@@ -65,5 +68,16 @@ public class EventServiceImpl implements EventService {
         return sortedEvents.stream()
                 .map(EventMapper::toResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteEvent(Long eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EventException("Event not found with id: " + eventId));
+        //get all the booking fo this event and cancel the booking
+        List<BookingResponseDto> bookingsByEventId = bookingService.getBookingsByEventId(eventId);
+        bookingsByEventId.forEach(booking -> bookingService.cancelBooking(booking.getId()));
+        //delete event
+        eventRepository.delete(event.getId());
     }
 }

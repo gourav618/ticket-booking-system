@@ -11,5 +11,5 @@ public class Booking {
     private Long eventId;
     private Long userId;
     private Integer seatsBooked;
-    private BookingStatus status = BookingStatus.ACTIVE;
+    private BookingStatus status;
 }

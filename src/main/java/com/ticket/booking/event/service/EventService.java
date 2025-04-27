@@ -10,4 +10,6 @@ public interface EventService {
     EventResponseDto createEvent(EventRequestDto eventRequestDto);
     EventResponseDto getEventById(Long eventId);
     List<EventResponseDto> getAllEvents(String sortBy);
+
+    void deleteEvent(Long eventId);
 }

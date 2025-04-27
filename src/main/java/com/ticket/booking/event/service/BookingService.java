@@ -11,4 +11,5 @@ public interface BookingService {
     void cancelBooking(Long bookingId);
 
     List<BookingResponseDto> getBookings(Long bookingId, Long eventId, Long userId);
+    List<BookingResponseDto> getBookingsByEventId(Long eventId);
 }

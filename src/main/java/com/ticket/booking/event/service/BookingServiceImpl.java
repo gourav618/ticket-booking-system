@@ -116,4 +116,13 @@ public class BookingServiceImpl implements BookingService {
                 .map(BookingMapper::toResponseDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<BookingResponseDto> getBookingsByEventId(Long eventId) {
+        List<Booking> bookings = bookingRepository.findAll();
+        return bookings.stream()
+                .filter(booking -> booking.getEventId().equals(eventId))
+                .map(BookingMapper::toResponseDto)
+                .collect(Collectors.toList());
+    }
 }
