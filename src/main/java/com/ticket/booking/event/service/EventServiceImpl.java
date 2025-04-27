@@ -24,6 +24,12 @@ public class EventServiceImpl implements EventService {
         this.sortStrategyFactory = sortStrategyFactory;
     }
 
+    /**
+     * Creates a new event.
+     *
+     * @param eventRequestDto The event request dto.
+     * @return The event response dto.
+     */
     @Override
     public EventResponseDto createEvent(EventRequestDto eventRequestDto) {
         Event event = EventMapper.toEntity(eventRequestDto);
@@ -31,6 +37,13 @@ public class EventServiceImpl implements EventService {
         return EventMapper.toResponseDto(savedEvent);
     }
 
+    /**
+     * Retrieves an event by its ID.
+     *
+     * @param eventId The ID of the event to retrieve.
+     * @return The event response dto.
+     * @throws EventException If the event is not found.
+     */
     @Override
     public EventResponseDto getEventById(Long eventId) {
         Event event = eventRepository.findById(eventId)
@@ -38,6 +51,12 @@ public class EventServiceImpl implements EventService {
         return EventMapper.toResponseDto(event);
     }
 
+    /**
+     * Retrieves all events, optionally sorted by a specified strategy.
+     *
+     * @param sortBy The field to sort the events by (optional).
+     * @return A list of event response dto.
+     */
     @Override
     public List<EventResponseDto> getAllEvents(String sortBy) {
         List<Event> events = eventRepository.findAll();

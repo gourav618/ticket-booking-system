@@ -21,8 +21,8 @@ public class EventController {
     /**
      * Creates a new event.
      *
-     * @param eventRequestDto the event request data transfer object containing event details
-     * @return a ResponseEntity containing the created event response to
+     * @param eventRequestDto the event request dto containing event details
+     * @return a ResponseEntity containing the created event response dto
      */
     @PostMapping
     public ResponseEntity<EventResponseDto> createEvent(@RequestBody EventRequestDto eventRequestDto) {

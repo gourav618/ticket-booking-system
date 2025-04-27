@@ -10,22 +10,21 @@ public class EventMapper {
     }
 
     public static Event toEntity(EventRequestDto dto) {
-        Event event = new Event();
-        event.setName(dto.getName());
-        event.setDate(dto.getDate());
-        event.setLocation(dto.getLocation());
-        event.setTotalSeats(dto.getTotalSeats());
-        return event;
+        return Event.builder().name(dto.getName())
+                .date(dto.getDate())
+                .location(dto.getLocation())
+                .totalSeats(dto.getTotalSeats())
+                .bookedSeats(0)
+                .build();
     }
 
     public static EventResponseDto toResponseDto(Event event) {
-        EventResponseDto dto = new EventResponseDto();
-        dto.setId(event.getId());
-        dto.setName(event.getName());
-        dto.setDate(event.getDate());
-        dto.setLocation(event.getLocation());
-        dto.setTotalSeats(event.getTotalSeats());
-        dto.setBookedSeats(event.getBookedSeats());
-        return dto;
+        return EventResponseDto.builder().id(event.getId())
+                .name(event.getName())
+                .date(event.getDate())
+                .location(event.getLocation())
+                .totalSeats(event.getTotalSeats())
+                .bookedSeats(event.getBookedSeats())
+                .build();
     }
 }

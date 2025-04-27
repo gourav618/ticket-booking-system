@@ -30,6 +30,14 @@ public class BookingServiceImpl implements BookingService {
         this.eventRepository = eventRepository;
     }
 
+    /**
+     * Creates a new booking for an event.
+     *
+     * @param bookingRequestDto The booking request dto.
+     * @return The booking response dto.
+     * @throws EventException              If the event is not found.
+     * @throws DuplicateBookingException   If the user has already booked the event.
+     */
     @Override
     public BookingResponseDto createBooking(BookingRequestDto bookingRequestDto) {
         Event event = eventRepository.findById(bookingRequestDto.getEventId())
@@ -54,6 +62,13 @@ public class BookingServiceImpl implements BookingService {
         return BookingMapper.toResponseDto(savedBooking);
     }
 
+    /**
+     * Cancels an existing booking.
+     *
+     * @param bookingId The ID of the booking to cancel.
+     * @throws BookingException If the booking is not found or already canceled.
+     * @throws EventException   If the associated event is not found.
+     */
     @Override
     public void cancelBooking(Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
@@ -72,6 +87,14 @@ public class BookingServiceImpl implements BookingService {
         eventRepository.save(event);
     }
 
+    /**
+     * Retrieves a list of bookings based on optional filters.
+     *
+     * @param bookingId The ID of the booking to filter by (optional).
+     * @param eventId   The ID of the event to filter by (optional).
+     * @param userId    The ID of the user to filter by (optional).
+     * @return A list of booking response dto.
+     */
     @Override
     public List<BookingResponseDto> getBookings(Long bookingId, Long eventId, Long userId) {
         List<Booking> bookings = bookingRepository.findAll(); // In-memory case
